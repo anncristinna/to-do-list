@@ -1,10 +1,18 @@
 const express= require('express')
 const app = express()
+const path = require("path")
+const routes = require('./routes/routes')
 
-app.get('/', (req, res) => {
-    res.send("Hello World!")
-})
+//configuações
+    
+    app.set("view engine", "ejs")
+    app.use(express.static(path.join(__dirname, "public"))) //para indentificar que os arquivos estáticos estão na pasta public
+    app.use(routes)
 
-app.listen(3000, () => {
-    console.log("Servidor rodando na URL http://localhost3000")
+
+
+
+const port = 8081
+app.listen(port, () => {
+    console.log(`Servidor rodando na URL http://localhost:${port}`)
 })
