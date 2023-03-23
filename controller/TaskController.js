@@ -1,6 +1,13 @@
 const Task = require('../models/Task')
-const getAllTasks = (req, res) => {
-    return res.render("index")
+
+const getAllTasks = async (req, res) => {
+    try {
+        const taskList = await Task.find()
+        return res.render("index", {taskList})
+    }
+    catch(err){
+        res.status(500).send({error: err.message})
+    }
 }
 
 const createTask = async (req, res) => {
@@ -11,10 +18,10 @@ const createTask = async (req, res) => {
     }
 
     try{
-        await Task.create(task) // task recebida no body
+        await Task.create(task) // task recebida no body espere até a task ser criada 
         return res.redirect('/')
     } catch(err) {
-        res.status(500).send({error: err.message})
+        res.status(500).send({error: err.message}) // esse message esta dentro do err
     }
 }
 
