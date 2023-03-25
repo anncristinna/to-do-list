@@ -25,6 +25,12 @@ const createTask = async (req, res) => {
     }
 }
 
+const getByID = async (req, res) => {
+    const task = await Task.findOne({_id: req.params.id }) // uma vez que vem do cliente é uma requisição
+    const taskList = await Task.find() // para mandar não so a task mas a tasklist se não vai sumir 
+    res.render("index", {task, taskList})
+}
+
 module.exports = {
     getAllTasks,
     createTask
